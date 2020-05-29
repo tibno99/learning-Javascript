@@ -1,32 +1,19 @@
-let size = 2, tag = "#", space = " ", even = "#", odd = " ";
+let size = 25, tag = "#", space = " ", chessboard = " ";
 
 //Determines which row you are on
 for(let i = 0; i < size; i++){
-    //For every even row (0,2,4, etc...)
-    if(i%2 == 0){
-        for(let i = 0; i < size - 1; i++){
-            if(i%2 == 0){
-                even = even + space;
-            }
-            else{
-                even = even + tag;
-            }
+  //Determines which coloumn your on
+    for(let j = 0; j < size; j++){
+        if( (i + j)%2 == 0){
+            chessboard += tag;
         }
-        console.log(even);
-        even = "#";
+        else{
+            chessboard += space;
+        }
+        
     }
-    //else it's odd
-    else{
-        for(let i = 0; i < size - 1; i++){
-            if(i%2 == 0){
-                odd = odd + tag;
-            }
-            else{
-                odd = odd + space;
-            }
-         }
-        console.log(odd);
-        odd = " ";
-     }
+    console.log(chessboard);
+    chessboard = " ";
 }
+
 
