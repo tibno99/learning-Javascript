@@ -23,4 +23,4 @@ return count;
 }
 
 
-console.log(countChars("juicy moosy", "y"));
+console.log(countChars("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "b"));
