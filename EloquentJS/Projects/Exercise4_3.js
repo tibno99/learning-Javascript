@@ -27,7 +27,7 @@ let list = { value: 1,
 
 
 
-let {value, rest} = list.rest.rest;
+let {value, rest} 
 
 
 
