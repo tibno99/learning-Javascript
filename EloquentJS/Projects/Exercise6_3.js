@@ -50,6 +50,4 @@ for (let value of Group.from(["a", "b", "c"])) {
    console.log(value);
   }
 
-  let group = Group.from([1,2,3,]);
-  console.log(group);
-  
+ 
