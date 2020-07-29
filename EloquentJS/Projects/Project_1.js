@@ -1,6 +1,7 @@
 /*
 Project 1: A Robot
 */
+//A list containing the road connections in the village
 const roads = [
     "Alice's House-Bob's House",     "Alice's House-Cabin",
     "Alice's House-Post Office",     "Bob's House-Town Hall",
@@ -10,7 +11,7 @@ const roads = [
     "Marketplace-Post Office",       "Marketplace-Shop",
     "Marketplace-Town Hall",         "Shop-Town Hall"
   ];
-
+//Builds the village graph from the roads constant
  function buildGraph(edges){
     let graph = Object.create(null);
     function addEdge(from, to){
@@ -30,6 +31,7 @@ const roads = [
 
  const roadGraph = buildGraph(roads);
 
+//We classify the village into states
 class VillageState{
     constructor(place, parcels){
         this.place = place;
@@ -66,16 +68,17 @@ function runRobot(state, robot, memory){
     }
 }
 
-
+//Random array picker function
 function randomPick(array){
     let choice = Math.floor(Math.random()*array.length);
     return array[choice]
 }
-
+//Robot that uses the random array picker function to decide where to go
 function randomRobot(state){
     return {direction: randomPick(roadGraph[state.place])};
 }
 
+//This randomly creates a graph with distributed parcels
 VillageState.random = function(parcelCount = 5){
     let parcels = [];
     for(let i = 0; i < parcelCount; i++){
@@ -89,12 +92,14 @@ VillageState.random = function(parcelCount = 5){
     return new VillageState("Post Office", parcels);
 }
 
+//This is the memory for the route robot
 const mailRoute = [ "Alice's House", "Cabin", "Alice's House", "Bob's House",
 "Town Hall", "Daria's House", "Ernie's House",
 "Grete's House", "Shop", "Grete's House", "Farm",
 "Marketplace", "Post Office"
 ];
 
+//this route Robot uses memory (defined above) to go around the village delivering based off whats next on the list
 function routeRobot(state, memory){
     if(memory.length == 0){
         memory = mailRoute;
@@ -102,6 +107,32 @@ function routeRobot(state, memory){
     return {direction: memory[0], memory: memory.slice(1)};
 }
 
+//This function finds the shortest route between A => B
+function findRoute(graph, from, to){
+    let work = [{at: from, route: []}];
+    for(let i = 0; i <work.length; i++){
+        let {at, route} = work[i];
+        for (let place of graph[at]){
+            if(place == to) return route.concat(place);
+            if(!work.some(w => w.at == place)){
+                work.push({at: place, route: route.concat(place)})
+            }
+        }
+    }
+}
 
+//This robot uses a web to try to go to the goal the fastest
+function goalOrientedRobot({place, parcels}, route){
+    if (route.length == 0){
+        let parcel = parcels[0];
+        if (parcel.place != place){
+            route = findRoute(roadGraph, place, parcel.place);
+        }
+        else{
+            route = findRoute(roadGraph, place, parcel.address)
+        }
+    }
+    return {direction: route[0], memory: route.slice(1)};
+}
 
-runRobot(VillageState.random(), routeRobot, mailRoute);
+runRobot(VillageState.random(), goalOrientedRobot, []);
