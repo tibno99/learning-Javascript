@@ -58,13 +58,13 @@ class VillageState{
 function runRobot(state, robot, memory){
     for(let turn = 0;;turn++){
         if(state.parcels.length == 0){
-            console.log(`Done in ${turn} turns`);
-            break;
+            //edit line below
+            return turn;
         }
         let action = robot(state, memory);
         state = state.move(action.direction);
         memory = action.memory;
-        console.log(`Moved to ${action.direction}`);
+       //removed console line;
     }
 }
 
@@ -135,4 +135,27 @@ function goalOrientedRobot({place, parcels}, route){
     return {direction: route[0], memory: route.slice(1)};
 }
 
-runRobot(VillageState.random(), goalOrientedRobot, []);
+
+//Run code here
+//runRobot(VillageState.random(), goalOrientedRobot, []);
+
+
+
+
+//Function to compare two robots
+function compareRobots(robot1, memory1, robot2, memory2){
+   let outputArray = [];
+   let count = 10;
+   let outputAvg = [];
+    for(let i = 0; i < count; i++){
+        let task = VillageState.random();
+        outputArray.push({Task: i, 'Robot 1':runRobot(task, robot1, memory1), 'Robot 2':runRobot(task, robot2, memory2)});
+    }
+
+
+
+    return outputArray;
+}
+
+
+console.log(compareRobots(randomRobot,[], routeRobot, mailRoute));
