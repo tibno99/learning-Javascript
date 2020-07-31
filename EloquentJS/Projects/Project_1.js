@@ -144,17 +144,18 @@ function goalOrientedRobot({place, parcels}, route){
 
 //Function to compare two robots
 function compareRobots(robot1, memory1, robot2, memory2){
-   let outputArray = [];
-   let count = 10;
+   let logArray = [];
+   let count = 100;
    let outputAvg = [];
     for(let i = 0; i < count; i++){
         let task = VillageState.random();
-        outputArray.push({Task: i, 'Robot 1':runRobot(task, robot1, memory1), 'Robot 2':runRobot(task, robot2, memory2)});
+        logArray.push({Task: i, 'Robot 1':runRobot(task, robot1, memory1), 'Robot 2':runRobot(task, robot2, memory2)});
     }
 
+    
+    let outputArray = logArray.map()
 
-
-    return outputArray;
+    return logArray;
 }
 
 
