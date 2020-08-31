@@ -65,6 +65,8 @@ function runRobot(state, robot, memory){
         state = state.move(action.direction);
         memory = action.memory;
        //removed console line;
+       console.log(`Moved to ${action.direction}`);
+
     }
 }
 
@@ -136,8 +138,8 @@ function goalOrientedRobot({place, parcels}, route){
 }
 
 
-//Run code here
-//runRobot(VillageState.random(), goalOrientedRobot, []);
+
+
 
 
 
@@ -146,17 +148,33 @@ function goalOrientedRobot({place, parcels}, route){
 function compareRobots(robot1, memory1, robot2, memory2){
    let logArray = [];
    let count = 100;
-   let outputAvg = [];
+   let total = [0,0];
     for(let i = 0; i < count; i++){
         let task = VillageState.random();
         logArray.push({Task: i, 'Robot 1':runRobot(task, robot1, memory1), 'Robot 2':runRobot(task, robot2, memory2)});
+        total[0] += logArray[i]['Robot 1'];
+        total[1] += logArray[i]['Robot 2'];
     }
-
+    total = total.map(n => n/count);
+    console.log(`Robot 1 took an average of ${Math.floor(total[0])} turns.\nRobot 2 took an average of ${Math.floor(total[1])} turns.`)
     
-    let outputArray = logArray.map()
+}
 
-    return logArray;
+//A new better faster robot
+
+
+function betterBot(){
+
+
+
+
 }
 
 
-console.log(compareRobots(randomRobot,[], routeRobot, mailRoute));
+
+
+
+//Run Code Here
+//compareRobots(randomRobot,[], routeRobot, mailRoute);
+
+runRobot(VillageState.random(), goalOrientedRobot, []);
