@@ -152,7 +152,7 @@ function compareRobots(robot1, memory1, robot2, memory2){
     console.log(`Robot 1 took an average of ${Math.floor(total[0])} turns.\nRobot 2 took an average of ${Math.floor(total[1])} turns.`)
     
 }
-
+/*
 //A new better faster robot, my attempt, its broken and kind of ugly
 function betterBot({place, parcels}, route){
 if(route.length == 0){
@@ -177,6 +177,7 @@ if(route.length == 0){
 }
 return {direction: route[0], memory: route.slice(1)};
 }
+*/
 
 function bookbetterbot({place, parcels}, route){
 if (route.length == 0){
@@ -198,6 +199,45 @@ return{direction: route[0], memory: route.slice(1)};
 
 
 
+class PGroup{
+
+    constructor(value){
+        this.values = value;
+    }
+
+    has(index){
+        if(this.values.includes(index)){return true;}
+        return false;
+    }
+
+    add(index){
+        if(this.has(index)){return this;}
+        let add_array = this.values.concat(index);        
+        return new PGroup(add_array);
+    }
+
+    delete(index){
+        if(this.has(index)){
+            let delete_array = this.values.filter(n => n != index);
+            return new PGroup(delete_array);
+        }
+       return this;
+    }
+
+};
+
+PGroup["empty"] = new PGroup([]);
+
+
 //Run Code Here
-compareRobots(goalOrientedRobot, [], bookbetterbot, []);
+//compareRobots(goalOrientedRobot, [], bookbetterbot, []);
+
+let a = PGroup.empty.add("a");
+let ab = a.add("b");
+let b = ab.delete("a");
+
+console.log(a);
+console.log(ab);
+console.log(a.has("b"));
+console.log(b.has("a"));
 //runRobot(VillageState.random(), bookbetterbot,[]);
